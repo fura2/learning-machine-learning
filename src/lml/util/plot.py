@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 
 
-def main():
+def main() -> None:
     epochs = []
     accuracies = []
     avg_losses = []
@@ -16,10 +16,10 @@ def main():
             avg_losses.append(float(loss))
 
     fig = plt.figure()
-    ax1 = fig.subplots()
-    ax2 = ax1.twinx()
-    ax1.plot(epochs, accuracies, color='blue')
-    ax2.plot(epochs, avg_losses, color='red')
+    axes1 = fig.subplots()
+    axes2 = axes1.twinx()
+    axes1.plot(epochs, accuracies, color='blue')
+    axes2.plot(epochs, avg_losses, color='red')
     plt.show()
 
 

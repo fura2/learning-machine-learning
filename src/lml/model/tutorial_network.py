@@ -1,7 +1,9 @@
 from torch import Tensor, nn
 
 
-class SimpleFourLayersNetwork(nn.Module):
+class TutorialNetwork(nn.Module):
+    '''The neural network used in the tutorial of PyTorch'''
+
     def __init__(self) -> None:
         super().__init__()
         self.flatten = nn.Flatten()
