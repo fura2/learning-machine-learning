@@ -13,7 +13,7 @@ def make_adversarial_examples(
         epsilon: float = 0.1,
 ) -> DataLoader:
     '''Make adversarial examples by the fast gradient sign method'''
-    class Dataset_AE(Dataset):
+    class DatasetAE(Dataset):
         def __init__(self, dataloader: DataLoader) -> None:
             self.size = len(dataloader.dataset)
 
@@ -44,6 +44,6 @@ def make_adversarial_examples(
             return self.size
 
     return DataLoader(
-        dataset=Dataset_AE(dataloader),
+        dataset=DatasetAE(dataloader),
         batch_size=dataloader.batch_size,
     )

@@ -42,7 +42,7 @@ def main() -> None:
     loss_function = nn.CrossEntropyLoss()
     # optimizer = torch.optim.SGD(params=model.parameters(), lr=1e-3)
 
-    model.load_state_dict(torch.load('outputs/tutorial_network/model.pth'))
+    model.load_state_dict(torch.load('outputs/logistic_regression/model.pth'))
     show_confusion_matrix(test_dataloader, model, device)
     # review(test_dataloader, model, device, wrong_only=True)
 

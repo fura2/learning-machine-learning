@@ -17,8 +17,14 @@ def train(
         optimizer: Optimizer,
         device: str,
 ) -> None:
-    '''Train an epoch'''
+    '''
+    Train an epoch.
+    Compute accuracy and average loss for the given dataset.
+    '''
     model.train()
+
+    n_correct = 0
+    total_loss = 0
     for X, y in dataloader:
         X: Tensor
         y: Tensor
@@ -28,9 +34,15 @@ def train(
         pred: Tensor = model(X)  # [batch_size, 10]
         loss: Tensor = loss_function(pred, y)  # []
 
+        y_pred = pred.max(dim=1).indices
+        n_correct += y.eq(y_pred).sum().item()
+        total_loss += loss.item()
+
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+
+    return n_correct / len(dataloader.dataset), total_loss / len(dataloader)
 
 
 def test(
@@ -39,7 +51,7 @@ def test(
         loss_function: nn.Module,
         device: str,
 ) -> Tuple[float, float]:
-    '''Compute accuracy and total loss for the given dataset'''
+    '''Compute accuracy and average loss for the given dataset'''
     model.eval()
 
     n_correct = 0
@@ -54,9 +66,8 @@ def test(
             pred: Tensor = model(X)  # [batch_size, 10]
             loss: Tensor = loss_function(pred, y)  # []
 
-            y = y.detach().numpy()
-            y_pred = np.argmax(pred.detach().numpy(), axis=1)
-            n_correct += sum(map(operator.eq, y, y_pred))
+            y_pred = pred.max(dim=1).indices
+            n_correct += y.eq(y_pred).sum().item()
             total_loss += loss.item()
 
     return n_correct / len(dataloader.dataset), total_loss / len(dataloader)
