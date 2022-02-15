@@ -7,14 +7,12 @@ from torch.utils.data import DataLoader
 def review(
         dataloader: DataLoader,
         model: nn.Module,
-        device: str,
         wrong_only: bool = False,
 ) -> None:
     '''Review predicted results for the given dataset'''
     model.eval()
 
     def get_predicted_label(X: Tensor) -> int:
-        X = X.to(device)
         pred = model(X)
         return int(np.argmax(pred.detach().numpy()))
 

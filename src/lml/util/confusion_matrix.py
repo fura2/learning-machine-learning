@@ -1,28 +1,25 @@
 import math
 from typing import List
 
-from matplotlib import colors
 import matplotlib.pyplot as plt
-from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
 import torch
+from matplotlib import colors
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 from torch import Tensor, nn
 from torch.utils.data import DataLoader
 
 
-def confusion_matrix(
+def get_confusion_matrix(
         dataloader: DataLoader,
         model: nn.Module,
-        device: str,
 ) -> List[List[int]]:
     '''Compute confusion matrix'''
     conf_mat = None
     with torch.no_grad():
         for X, y in dataloader:
-            X: Tensor
-            y: Tensor
-            X = X.to(device)  # [batch_size, 1, 28, 28]
-            y = y.to(device)  # [batch_size]
+            X: Tensor  # [batch_size, 1, 28, 28]
+            y: Tensor  # [batch_size]
 
             pred: Tensor = model(X)  # [batch_size, 10]
 
@@ -42,10 +39,9 @@ def confusion_matrix(
 def show_confusion_matrix(
         dataloader: DataLoader,
         model: nn.Module,
-        device: str,
 ) -> None:
     '''Show confusion matrix'''
-    conf_mat = confusion_matrix(dataloader, model, device)
+    conf_mat = get_confusion_matrix(dataloader, model)
     h = len(conf_mat)
     w = len(conf_mat[0])
     assert h == w

@@ -6,8 +6,8 @@ import torch
 from torch import nn
 
 from lml.model import LogisticRegression, TutorialNetwork
-from lml.sandbox import get_dataloaders
 from lml.train import test, train
+from lml.util import get_dataloaders
 
 
 def parse_args():

@@ -1,1 +1,1 @@
-from .train import train, test
+from .train import test, train

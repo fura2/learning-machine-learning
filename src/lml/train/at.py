@@ -3,7 +3,7 @@ from typing import Tuple
 
 import torch
 from torch import Tensor, nn
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader, Dataset
 
 
 def make_adversarial_examples(
